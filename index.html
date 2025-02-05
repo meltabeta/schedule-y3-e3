@@ -1,50 +1,212 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="bg-gray-900">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Y4E3 Schedule</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <style>
+      @media (max-width: 640px) {
+        .schedule-table {
+          font-size: 0.875rem;
+          line-height: 1.25rem;
+        }
+        .desktop-table {
+          display: none;
+        }
+      }
+      @media (min-width: 641px) {
+        .mobile-view {
+          display: none;
+        }
+      }
+    </style>
   </head>
-  <body class="bg-white font-sans leading-normal tracking-normal">
-    <div class="container mx-auto px-4 py-8">
+  <body class="bg-gray-900 font-sans leading-normal tracking-normal min-h-screen">
+    <div class="container mx-auto px-2 sm:px-4 py-4 sm:py-8 max-w-7xl">
       <!-- Header -->
-      <div class="mb-8 text-center">
-        <h1 class="text-2xl font-bold">សាកលវិទ្យាល័យភ្នំពេញ</h1>
-        <p class="text-lg">បន្ទប់ ៣០៥ ម៉ោង A ឆ្នាំ Y4E3</p>
+      <div class="mb-4 sm:mb-8 text-center">
+        <h1 class="text-lg sm:text-xl md:text-2xl font-bold text-white mb-2">សាកលវិទ្យាល័យភ្នំពេញ</h1>
+        <p class="text-sm sm:text-base md:text-lg text-gray-300">បន្ទប់ ៣០៥ ម៉ោង A ឆ្នាំ Y4E3</p>
       </div>
 
-      <!-- Table -->
-      <table class="w-full border-collapse border border-gray-400">
-        <thead>
-          <tr>
-            <th class="border border-gray-400 p-2 text-center">ពេល</th>
-            <th class="border border-gray-400 p-2 text-center">ច័ន្ទ</th>
-            <th class="border border-gray-400 p-2 text-center">អង្គារ</th>
-            <th class="border border-gray-400 p-2 text-center">ពុធ</th>
-            <th class="border border-gray-400 p-2 text-center">ព្រហស្បតិ៍</th>
-            <th class="border border-gray-400 p-2 text-center">សុក្រ</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="border border-gray-400 p-2 text-center">៦:០០-៧:០០</td>
-            <td class="border border-gray-400 p-2">Linux System Admin.<br />Mr. Loeung Vidal<br />Lab : 303</td>
-            <td class="border border-gray-400 p-2">S.E and IT PM<br />Mr. Lim LyHeng</td>
-            <td class="border border-gray-400 p-2">Linux System Admin.<br />Mr. Loeung Vidal</td>
-            <td class="border border-gray-400 p-2">OAD and Prog.<br />Mr. Svoey Buna<br />Lab : 205</td>
-            <td class="border border-gray-400 p-2">OAD and Prog.<br />Mr. Svoey Buna</td>
-          </tr>
-          <tr>
-            <td class="border border-gray-400 p-2 text-center">៧:០៥-៨:០៥</td>
-            <td class="border border-gray-400 p-2">M.I.S<br />Mr. Ear Eksanthan</td>
-            <td class="border border-gray-400 p-2">M.I.S<br />Mr. Ear Eksanthan</td>
-            <td class="border border-gray-400 p-2">Web Application Dev.<br />Dr. Heng Sovannarith</td>
-            <td class="border border-gray-400 p-2">Web Application Dev.<br />Dr. Heng Sovannarith<br />Lab : 205</td>
-            <td class="border border-gray-400 p-2">S.E and IT PM<br />Mr. Lim LyHeng</td>
-          </tr>
-        </tbody>
-      </table>
+      <!-- Mobile Day Selector -->
+      <div class="mobile-view mb-4">
+        <select id="daySelector" onchange="showDay(this.value)" class="w-full p-2 bg-gray-800 text-white rounded-lg border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <option value="monday">ច័ន្ទ</option>
+          <option value="tuesday">អង្គារ</option>
+          <option value="wednesday">ពុធ</option>
+          <option value="thursday">ព្រហស្បតិ៍</option>
+          <option value="friday">សុក្រ</option>
+        </select>
+      </div>
+
+      <!-- Mobile Schedule View -->
+      <div class="mobile-view">
+        <div class="bg-gray-800 rounded-lg shadow-lg p-4 schedule-content">
+          <!-- Monday Schedule -->
+          <div id="monday" class="day-schedule">
+            <h2 class="text-white font-bold text-lg mb-4">ច័ន្ទ</h2>
+            <div class="space-y-4">
+              <div class="bg-gray-700 rounded-lg p-3">
+                <div class="text-white font-medium">៦:០០-៧:០០</div>
+                <div class="text-base font-medium text-gray-300">Linux System Admin.</div>
+                <div class="text-sm text-gray-400">Mr. Loeung Vidal</div>
+                <div class="text-sm text-gray-400">Lab : 303</div>
+              </div>
+              <div class="bg-gray-700 rounded-lg p-3">
+                <div class="text-white font-medium">៧:០៥-៨:០៥</div>
+                <div class="text-base font-medium text-gray-300">M.I.S</div>
+                <div class="text-sm text-gray-400">Mr. Ear Eksanthan</div>
+              </div>
+            </div>
+          </div>
+          <!-- Tuesday Schedule -->
+          <div id="tuesday" class="day-schedule hidden">
+            <h2 class="text-white font-bold text-lg mb-4">អង្គារ</h2>
+            <div class="space-y-4">
+              <div class="bg-gray-700 rounded-lg p-3">
+                <div class="text-white font-medium">៦:០០-៧:០០</div>
+                <div class="text-base font-medium text-gray-300">S.E and IT PM</div>
+                <div class="text-sm text-gray-400">Mr. Lim LyHeng</div>
+              </div>
+              <div class="bg-gray-700 rounded-lg p-3">
+                <div class="text-white font-medium">៧:០៥-៨:០៥</div>
+                <div class="text-base font-medium text-gray-300">M.I.S</div>
+                <div class="text-sm text-gray-400">Mr. Ear Eksanthan</div>
+              </div>
+            </div>
+          </div>
+          <!-- Wednesday Schedule -->
+          <div id="wednesday" class="day-schedule hidden">
+            <h2 class="text-white font-bold text-lg mb-4">ពុធ</h2>
+            <div class="space-y-4">
+              <div class="bg-gray-700 rounded-lg p-3">
+                <div class="text-white font-medium">៦:០០-៧:០០</div>
+                <div class="text-base font-medium text-gray-300">Linux System Admin.</div>
+                <div class="text-sm text-gray-400">Mr. Loeung Vidal</div>
+              </div>
+              <div class="bg-gray-700 rounded-lg p-3">
+                <div class="text-white font-medium">៧:០៥-៨:០៥</div>
+                <div class="text-base font-medium text-gray-300">Web Application Dev.</div>
+                <div class="text-sm text-gray-400">Dr. Heng Sovannarith</div>
+              </div>
+            </div>
+          </div>
+          <!-- Thursday Schedule -->
+          <div id="thursday" class="day-schedule hidden">
+            <h2 class="text-white font-bold text-lg mb-4">ព្រហស្បតិ៍</h2>
+            <div class="space-y-4">
+              <div class="bg-gray-700 rounded-lg p-3">
+                <div class="text-white font-medium">៦:០០-៧:០០</div>
+                <div class="text-base font-medium text-gray-300">OAD and Prog.</div>
+                <div class="text-sm text-gray-400">Mr. Svoey Buna</div>
+                <div class="text-sm text-gray-400">Lab : 205</div>
+              </div>
+              <div class="bg-gray-700 rounded-lg p-3">
+                <div class="text-white font-medium">៧:០៥-៨:០៥</div>
+                <div class="text-base font-medium text-gray-300">Web Application Dev.</div>
+                <div class="text-sm text-gray-400">Dr. Heng Sovannarith</div>
+                <div class="text-sm text-gray-400">Lab : 205</div>
+              </div>
+            </div>
+          </div>
+          <!-- Friday Schedule -->
+          <div id="friday" class="day-schedule hidden">
+            <h2 class="text-white font-bold text-lg mb-4">សុក្រ</h2>
+            <div class="space-y-4">
+              <div class="bg-gray-700 rounded-lg p-3">
+                <div class="text-white font-medium">៦:០០-៧:០០</div>
+                <div class="text-base font-medium text-gray-300">OAD and Prog.</div>
+                <div class="text-sm text-gray-400">Mr. Svoey Buna</div>
+              </div>
+              <div class="bg-gray-700 rounded-lg p-3">
+                <div class="text-white font-medium">៧:០៥-៨:០៥</div>
+                <div class="text-base font-medium text-gray-300">S.E and IT PM</div>
+                <div class="text-sm text-gray-400">Mr. Lim LyHeng</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Desktop Table View -->
+      <div class="desktop-table overflow-x-auto shadow-lg rounded-lg">
+        <table class="w-full border-collapse border border-gray-600 schedule-table">
+          <thead>
+            <tr class="bg-gray-800">
+              <th class="border border-gray-600 p-1.5 sm:p-2 text-center text-white whitespace-nowrap text-sm sm:text-base">ពេល</th>
+              <th class="border border-gray-600 p-1.5 sm:p-2 text-center text-white whitespace-nowrap text-sm sm:text-base">ច័ន្ទ</th>
+              <th class="border border-gray-600 p-1.5 sm:p-2 text-center text-white whitespace-nowrap text-sm sm:text-base">អង្គារ</th>
+              <th class="border border-gray-600 p-1.5 sm:p-2 text-center text-white whitespace-nowrap text-sm sm:text-base">ពុធ</th>
+              <th class="border border-gray-600 p-1.5 sm:p-2 text-center text-white whitespace-nowrap text-sm sm:text-base">ព្រហស្បតិ៍</th>
+              <th class="border border-gray-600 p-1.5 sm:p-2 text-center text-white whitespace-nowrap text-sm sm:text-base">សុក្រ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="border border-gray-600 p-1.5 sm:p-2 text-center text-white whitespace-nowrap text-sm sm:text-base">៦:០០-៧:០០</td>
+              <td class="border border-gray-600 p-1.5 sm:p-2 text-gray-300">
+                <div class="text-sm sm:text-base font-medium">Linux System Admin.</div>
+                <div class="text-xs sm:text-sm text-gray-400">Mr. Loeung Vidal</div>
+                <div class="text-xs sm:text-sm text-gray-400">Lab : 303</div>
+              </td>
+              <td class="border border-gray-600 p-1.5 sm:p-2 text-gray-300">
+                <div class="text-sm sm:text-base font-medium">S.E and IT PM</div>
+                <div class="text-xs sm:text-sm text-gray-400">Mr. Lim LyHeng</div>
+              </td>
+              <td class="border border-gray-600 p-1.5 sm:p-2 text-gray-300">
+                <div class="text-sm sm:text-base font-medium">Linux System Admin.</div>
+                <div class="text-xs sm:text-sm text-gray-400">Mr. Loeung Vidal</div>
+              </td>
+              <td class="border border-gray-600 p-1.5 sm:p-2 text-gray-300">
+                <div class="text-sm sm:text-base font-medium">OAD and Prog.</div>
+                <div class="text-xs sm:text-sm text-gray-400">Mr. Svoey Buna</div>
+                <div class="text-xs sm:text-sm text-gray-400">Lab : 205</div>
+              </td>
+              <td class="border border-gray-600 p-1.5 sm:p-2 text-gray-300">
+                <div class="text-sm sm:text-base font-medium">OAD and Prog.</div>
+                <div class="text-xs sm:text-sm text-gray-400">Mr. Svoey Buna</div>
+              </td>
+            </tr>
+            <tr>
+              <td class="border border-gray-600 p-1.5 sm:p-2 text-center text-white whitespace-nowrap text-sm sm:text-base">៧:០៥-៨:០៥</td>
+              <td class="border border-gray-600 p-1.5 sm:p-2 text-gray-300">
+                <div class="text-sm sm:text-base font-medium">M.I.S</div>
+                <div class="text-xs sm:text-sm text-gray-400">Mr. Ear Eksanthan</div>
+              </td>
+              <td class="border border-gray-600 p-1.5 sm:p-2 text-gray-300">
+                <div class="text-sm sm:text-base font-medium">M.I.S</div>
+                <div class="text-xs sm:text-sm text-gray-400">Mr. Ear Eksanthan</div>
+              </td>
+              <td class="border border-gray-600 p-1.5 sm:p-2 text-gray-300">
+                <div class="text-sm sm:text-base font-medium">Web Application Dev.</div>
+                <div class="text-xs sm:text-sm text-gray-400">Dr. Heng Sovannarith</div>
+              </td>
+              <td class="border border-gray-600 p-1.5 sm:p-2 text-gray-300">
+                <div class="text-sm sm:text-base font-medium">Web Application Dev.</div>
+                <div class="text-xs sm:text-sm text-gray-400">Dr. Heng Sovannarith</div>
+                <div class="text-xs sm:text-sm text-gray-400">Lab : 205</div>
+              </td>
+              <td class="border border-gray-600 p-1.5 sm:p-2 text-gray-300">
+                <div class="text-sm sm:text-base font-medium">S.E and IT PM</div>
+                <div class="text-xs sm:text-sm text-gray-400">Mr. Lim LyHeng</div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
+
+    <script>
+      function showDay(day) {
+        // Hide all day schedules
+        document.querySelectorAll('.day-schedule').forEach(schedule => {
+          schedule.classList.add('hidden');
+        });
+        // Show selected day schedule
+        document.getElementById(day).classList.remove('hidden');
+      }
+    </script>
   </body>
 </html>
